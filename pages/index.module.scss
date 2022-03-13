@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  &_left {
+    width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    //align-items: center;
+    padding-left: 150px;
+    gap: 20px;
+    .title {
+      font-size: 50px;
+      font-weight: 600;
+    }
+    .description {
+      font-size: 25px;
+      opacity: 0.6;
+      margin-bottom: 20px;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      color: white;
+      background: black;
+      font-size: 25px;
+      border-radius: 4px;
+      padding: 20px 40px;
+      width: fit-content;
+    }
+  }
+  &_right {
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+}
