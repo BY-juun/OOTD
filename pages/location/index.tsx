@@ -24,7 +24,7 @@ const Location = () => {
       submitData = pos;
     }
     axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${submitData?.latitude}&lon=${submitData?.longitude}&appid=ad74ebbb29c65cad08cfa4f03bdca2ba`)
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${submitData?.latitude}&lon=${submitData?.longitude}&appid=${process.env.API_KEY}`)
       .then((res) => {
         console.log(res);
       })
