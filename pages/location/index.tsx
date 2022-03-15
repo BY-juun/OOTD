@@ -4,6 +4,7 @@ import Map from "../../components/Map";
 import Layout from "../../layouts/Layout";
 import useCurrentLocation from "../../Utils/Hooks/useCurrentLocation";
 import styles from "./index.module.scss";
+import axios from "axios";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -15,12 +16,21 @@ const Location = () => {
   const { location: UserLocation, error: Error } = useCurrentLocation(geolocationOptions);
   const [pos, setPos] = useState({ latitude: UserLocation?.latitude, longitude: UserLocation?.longitude });
 
-  const Submit = useCallback(() => {
+  const Submit = useCallback(async () => {
+    let submitData;
     if (pos.latitude === undefined && pos.longitude === undefined) {
-      console.log(UserLocation);
+      submitData = UserLocation;
     } else {
-      console.log(pos);
+      submitData = pos;
     }
+    axios
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${submitData?.latitude}&lon=${submitData?.longitude}&appid=ad74ebbb29c65cad08cfa4f03bdca2ba`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, [UserLocation, pos]);
 
   return (
