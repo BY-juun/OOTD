@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import React, { ReactElement, ReactNode } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -13,16 +13,15 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const queryClientRef = React.useRef<QueryClient>();
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient();
-  }
+  const [queryClient] = React.useState<QueryClient>(() => new QueryClient());
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <QueryClientProvider client={queryClientRef.current}>
-      <Component {...pageProps} />
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Component {...pageProps} />
+      </Hydrate>
     </QueryClientProvider>
   );
 }
